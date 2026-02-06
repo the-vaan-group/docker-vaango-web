@@ -89,9 +89,6 @@ ENV PATH="${WORKDIR}/devops/bin:${WORKDIR}/bin:${WORKDIR}/node_modules/.bin:${PA
 
 WORKDIR ${WORKDIR}
 
-ENV npm_config_cache="${TMP_DIR}/npm-cache" \
-    npm_config_store_dir="${TMP_DIR}/pnpm-store"
-
 RUN echo "Installing pnpm" \
     && PNPM_VERSION='10.28.1' \
     && npm install -g "pnpm@${PNPM_VERSION}" \
@@ -110,7 +107,7 @@ RUN echo "Installing development tools" \
       *) echo "unsupported architecture -- ${dpkgArch##*-}"; exit 1 ;; \
     esac \
     && set -ex \
-    && cd $TMP_DIR \
+    && cd /tmp \
     && curl -fsSLO --compressed "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-${ARCH}.zip" \
     && curl -fsSL "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/SHASUMS256.txt" | grep 'linux' | grep "${ARCH}.zip" > bunsums \
     && sha256sum --check bunsums --status \
@@ -131,7 +128,7 @@ RUN echo "Installing development tools" \
       *) echo "unsupported architecture -- ${dpkgArch##*-}"; exit 1 ;; \
     esac \
     && set -ex \
-    && cd $TMP_DIR \
+    && cd /tmp \
     && curl -fsSL --compressed --output bb.tar.gz \
       "https://github.com/babashka/babashka/releases/download/v${BABASHKA_VERSION}/babashka-${BABASHKA_VERSION}-linux-${ARCH}-static.tar.gz" \
     && curl -fsSL --output bb.tar.gz.sha256 \
@@ -152,7 +149,7 @@ RUN echo "Installing development tools" \
       *) echo "unsupported architecture -- ${dpkgArch##*-}"; exit 1 ;; \
     esac \
     && set -ex \
-    && cd $TMP_DIR \
+    && cd /tmp \
     && curl -fsSL --compressed --output ripgrep.tar.gz \
       "https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VERSION}/ripgrep-${RIPGREP_VERSION}-${ARCH}.tar.gz" \
     && curl -fsSL --output 'ripgrep.tar.gz.sha256' \
@@ -173,7 +170,7 @@ RUN echo "Installing development tools" \
       *) echo "unsupported architecture -- ${dpkgArch##*-}"; exit 1 ;; \
     esac \
     && set -ex \
-    && cd $TMP_DIR \
+    && cd /tmp \
     && curl -fsSLO --compressed "https://github.com/watchexec/watchexec/releases/download/v${WATCHEXEC_VERSION}/watchexec-${WATCHEXEC_VERSION}-${ARCH}.tar.xz" \
     && curl -fsSL "https://github.com/watchexec/watchexec/releases/download/v${WATCHEXEC_VERSION}/SHA512SUMS" | grep $ARCH | grep '.tar.xz' > watchexecsums \
     && sha512sum --check watchexecsums --status \
@@ -192,7 +189,7 @@ RUN echo "Installing development tools" \
       *) echo "unsupported architecture -- ${dpkgArch##*-}"; exit 1 ;; \
     esac \
     && set -ex \
-    && cd $TMP_DIR \
+    && cd /tmp \
     && curl -fsSLO --compressed "https://github.com/DarthSim/hivemind/releases/download/v${HIVEMIND_VERSION}/hivemind-v${HIVEMIND_VERSION}-linux-${ARCH}.gz" \
     && gunzip "./hivemind-v${HIVEMIND_VERSION}-linux-${ARCH}.gz" \
     && cp -fv "./hivemind-v${HIVEMIND_VERSION}-linux-${ARCH}" /usr/local/bin/hivemind \
@@ -209,7 +206,7 @@ RUN echo "Installing development tools" \
       *) echo "unsupported architecture -- ${dpkgArch##*-}"; exit 1 ;; \
     esac \
     && set -ex \
-    && cd $TMP_DIR \
+    && cd /tmp \
     && curl -fsSL --compressed --output starship.tar.gz \
       "https://github.com/starship/starship/releases/download/v${STARSHIP_VERSION}/starship-${ARCH}-unknown-linux-musl.tar.gz" \
     && curl -fsSL --output starship.tar.gz.sha256 \
